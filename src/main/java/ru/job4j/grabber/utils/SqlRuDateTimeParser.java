@@ -4,8 +4,16 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SqlRuDateTimeParser implements DateTimeParser {
+    private final static Map<String, Month> MONTHS = new HashMap<>();
+
+    static {
+        fillMonthsMap();
+    }
+
     @Override
     public LocalDateTime parse(String parse) {
         LocalDateTime result;
@@ -34,28 +42,25 @@ public class SqlRuDateTimeParser implements DateTimeParser {
     private LocalDateTime getAnotherDay(String[] date, String[] time) {
         return LocalDateTime.of(
                 Integer.parseInt("20" + date[2]),
-                getMonth(date[1]),
+                MONTHS.get(date[1]),
                 Integer.parseInt(date[0]),
                 Integer.parseInt(time[0]),
                 Integer.parseInt(time[1])
         );
     }
 
-    private Month getMonth(String month) {
-        return switch (month) {
-            case ("янв") -> Month.JANUARY;
-            case ("фер") -> Month.FEBRUARY;
-            case ("мар") -> Month.MARCH;
-            case ("апр") -> Month.APRIL;
-            case ("май") -> Month.MAY;
-            case ("июн") -> Month.JUNE;
-            case ("июл") -> Month.JULY;
-            case ("авг") -> Month.AUGUST;
-            case ("сен") -> Month.SEPTEMBER;
-            case ("окт") -> Month.OCTOBER;
-            case ("ноя") -> Month.NOVEMBER;
-            case ("дек") -> Month.DECEMBER;
-            default -> throw new IllegalStateException("Unexpected value: " + month);
-        };
+    private static void fillMonthsMap() {
+        MONTHS.put("янв", Month.JANUARY);
+        MONTHS.put("фер", Month.FEBRUARY);
+        MONTHS.put("мар", Month.MARCH);
+        MONTHS.put("апр", Month.APRIL);
+        MONTHS.put("май", Month.MAY);
+        MONTHS.put("июн", Month.JUNE);
+        MONTHS.put("июл", Month.JULY);
+        MONTHS.put("авг", Month.AUGUST);
+        MONTHS.put("сен", Month.SEPTEMBER);
+        MONTHS.put("окт", Month.OCTOBER);
+        MONTHS.put("ноя", Month.NOVEMBER);
+        MONTHS.put("дек", Month.DECEMBER);
     }
 }

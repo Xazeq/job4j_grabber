@@ -12,15 +12,17 @@ public class SqlRuDateTimeParserTest {
     @Test
     public void whenTodayDate() {
         SqlRuDateTimeParser parser = new SqlRuDateTimeParser();
+        LocalDateTime now = LocalDateTime.now();
         assertThat(parser.parse("сегодня, 12:49"),
-                is(LocalDateTime.of(2021, 7, 22, 12, 49)));
+                is(LocalDateTime.of(now.getYear(), now.getMonth(), now.getDayOfMonth(), 12, 49)));
     }
 
     @Test
     public void whenYesterdayDate() {
         SqlRuDateTimeParser parser = new SqlRuDateTimeParser();
+        LocalDateTime now = LocalDateTime.now();
         assertThat(parser.parse("вчера, 11:19"),
-                is(LocalDateTime.of(2021, 7, 21, 11, 19)));
+                is(LocalDateTime.of(now.getYear(), now.getMonth(), now.minusDays(1).getDayOfMonth(), 11, 19)));
     }
 
     @Test
