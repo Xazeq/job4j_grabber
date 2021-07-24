@@ -78,7 +78,7 @@ public class PsqlStore implements Store, AutoCloseable {
         )) {
             statement.setInt(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
-                while (resultSet.next()) {
+                if (resultSet.next()) {
                     post = new Post(
                             resultSet.getInt("id"),
                             resultSet.getString("name"),
